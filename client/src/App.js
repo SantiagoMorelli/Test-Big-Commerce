@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-route
 import { Redirect } from 'react-router-dom';
 import "./App.css";
 import api from "./api/products"
-import Header from "./components/Header";
+
 import ProductList from "./components/ProductList";
 import ProductDetail from "./components/ProductDetail";
 import EditProduct from "./components/EditProduct";
