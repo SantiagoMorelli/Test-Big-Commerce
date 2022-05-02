@@ -6,7 +6,7 @@ const  EditProduct =(props)=>{
   let navigate = useNavigate();
 const location = useLocation()
 const {product } = location.state
-// const { id, name, price,inventory_level } = product;
+
 
 const [price,setPrice]=useState(product.price);
 const [inventory_level,setInventory_level]=useState(product.inventory_level);
