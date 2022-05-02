@@ -47,6 +47,7 @@ let [error, setError] = React.useState(null);
             <input
               type="number"
               min={0}
+              step="any" 
               name="price"
               placeholder="Price"
               value={price}
