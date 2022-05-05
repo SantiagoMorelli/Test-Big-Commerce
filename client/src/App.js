@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import api from "./api/products"
+import api from "./api/products";
 
 import ProductList from "./components/ProductList";
+
 import ProductDetail from "./components/ProductDetail";
 import EditProduct from "./components/EditProduct";
 
 function App() {
-
   const [products, setProducts] = useState([]);
 
-const updateProductHandler = async (product) => {
+  const updateProductHandler = async (product) => {
     const response = await api.put(`/api/product/${product.id}`, product);
-    const {id} = response.data.data
+    const { id } = response.data.data;
     setProducts(
       products.map((product) => {
         return product.id === id ? { ...response.data.data } : product;
       })
     );
-
- 
   };
 
   const retrieveProducts = async () => {
@@ -35,23 +32,22 @@ const updateProductHandler = async (product) => {
     };
 
     getAllProducts();
-
   }, []);
 
   return (
     <div className="ui container">
       <Router>
-       
-      <Routes>
-          
-
-          <Route exact path="/" element={<ProductList    products={products}
-               />} />
-                 <Route
+        <Routes>
+          <Route exact path="/" element={<ProductList products={products} />} />
+          <Route
             path="/edit"
-            element={<EditProduct   updateProductHandler={updateProductHandler}/>} />
-          
-          <Route path="/product/:id" element={<ProductDetail/>} />
+            element={
+              <EditProduct updateProductHandler={updateProductHandler} />
+            }
+          />
+
+          <Route path="/product/:id" element={<ProductDetail />} />
+
         </Routes>
       </Router>
     </div>
