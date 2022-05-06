@@ -48,7 +48,9 @@ const ProductDetail = () => {
           <p>inventory_level</p>
           <div className="description">{inventory_level}</div>
           <p>description</p>
-          <div className="description">{description}</div>
+          <div className="description">{description.replace(/<\/?[^>]+(>|$)/g, "")
+          }</div>
+
         </div>
       </div>
       <div className="center-div">
