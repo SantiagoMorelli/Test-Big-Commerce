@@ -61,5 +61,29 @@ router.put("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+//UPDATE PRODUCTS
 
+
+
+router.put("/", async (req, res) => {
+
+  var options = {
+    method: 'PUT',
+    url: 'https://api.bigcommerce.com/stores/9o9bxiisek/v3/catalog/products',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-Auth-Token': 't9e46sxj3egf27c55o5cb7ivvqawwwd'
+    },
+    data: req.body,
+  };
+
+  try {
+    const updatedProduct = await axios.request(options);
+    res.status(200).json(updatedProduct.data);
+  } catch (err) {
+    
+    res.status(500).json(err);
+  }
+});
 module.exports = router;

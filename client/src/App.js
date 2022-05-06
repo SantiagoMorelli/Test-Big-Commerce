@@ -4,9 +4,10 @@ import "./App.css";
 import api from "./api/products";
 
 import ProductList from "./components/ProductList";
-
+import ProductListBulkEdition from "./components/ProductListBulkEdition";
 import ProductDetail from "./components/ProductDetail";
 import EditProduct from "./components/EditProduct";
+import EditProductBulkEdition from "./components/EditProductBulkEdition";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -20,6 +21,10 @@ function App() {
       })
     );
   };
+  const updateBulkProductHandler = async (products) => {
+    const response = await api.put(`/api/product/`, products);
+    setProducts(products);
+  };
 
   const retrieveProducts = async () => {
     const response = await api.get("/api/product/");
@@ -28,7 +33,18 @@ function App() {
   useEffect(() => {
     const getAllProducts = async () => {
       const allProducts = await retrieveProducts();
-      if (allProducts) setProducts(allProducts);
+      if (allProducts) {
+        const newAllProducts = allProducts.map((item) => {
+          return {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            inventory_level: item.inventory_level,
+          };
+        });
+
+        setProducts(newAllProducts);
+      }
     };
 
     getAllProducts();
@@ -40,14 +56,26 @@ function App() {
         <Routes>
           <Route exact path="/" element={<ProductList products={products} />} />
           <Route
+            exact
+            path="/bulk"
+            element={<ProductListBulkEdition products={products.slice(0,10)} />}
+          />
+          <Route
             path="/edit"
             element={
               <EditProduct updateProductHandler={updateProductHandler} />
             }
           />
+          <Route
+            path="/editbulk"
+            element={
+              <EditProductBulkEdition
+                updateBulkProductHandler={updateBulkProductHandler}
+              />
+            }
+          />
 
           <Route path="/product/:id" element={<ProductDetail />} />
-
         </Routes>
       </Router>
     </div>

@@ -6,7 +6,9 @@ const ProductList = (props) => {
     return <ProductCard product={product} key={product.id} />;
   });
   return (
+    
     <div className="main">
+     
       <h2>Product List</h2>
       <div className="ui celled list">{renderProductsList}</div>
     </div>
