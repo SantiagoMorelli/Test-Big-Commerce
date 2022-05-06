@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import api from "./api/products";
-
 import ProductList from "./components/ProductList";
 import ProductListBulkEdition from "./components/ProductListBulkEdition";
 import ProductDetail from "./components/ProductDetail";
@@ -19,24 +18,22 @@ function App() {
     const response = await api.put(`/api/product/${product.id}`, product);
     const { id } = response.data.data;
     setProducts(
-      products.map((product) => {
-        return product.id === id ? { ...response.data.data } : product;
-      })
+      products.map((product) =>
+        product.id === id ? { ...response.data.data } : product
+      )
     );
   };
 
   const updateBulkProductHandler = async (newProducts) => {
     const response = await api.put(`/api/product/`, newProducts);
-
     setProducts(
-      products.map((item) => {
-        return response.data.data.find((newitem) => newitem.id === item.id)
+      products.map((item) =>
+        response.data.data.find((newitem) => newitem.id === item.id)
           ? response.data.data.find((newitem) => newitem.id === item.id)
-          : item;
-      })
+          : item
+      )
     );
   };
-
   const retrieveProducts = async () => {
     const response = await api.get("/api/product/");
     return response.data.data;
@@ -55,12 +52,10 @@ function App() {
               inventory_level: item.inventory_level,
             };
           });
-
           setProducts(newAllProducts);
         } else {
           setProducts([]);
         }
-
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -102,7 +97,6 @@ function App() {
               />
             }
           />
-
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="*" element={<Error />} />
         </Routes>
@@ -110,5 +104,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
