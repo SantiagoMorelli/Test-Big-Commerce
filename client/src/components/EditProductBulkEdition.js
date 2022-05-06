@@ -3,14 +3,12 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const EditProductBulkEdition = (props) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { products } = location.state;
 
   const [InputFields, setInputFields] = useState(products);
-  //   const [inventory_level, setInventory_level] = useState(
-  //     product.inventory_level
-  //   );
+
 
   const update = () => {
     props.updateBulkProductHandler(InputFields );
@@ -25,13 +23,13 @@ const EditProductBulkEdition = (props) => {
 
   return (
     <div className="main">
-      <h2>Product List</h2>
+      <h2>Bulk Edit</h2>
       <div className="ui celled list">
         <button className="ui button blue" onClick={update}>
           Save
         </button>
         <div className="item">
-          <div className="content">
+    
             <table>
               <thead>
                 <tr>
@@ -87,7 +85,7 @@ const EditProductBulkEdition = (props) => {
           </div>
         </div>
       </div>
-    </div>
+  
   );
 };
 

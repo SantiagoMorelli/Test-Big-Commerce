@@ -8,9 +8,11 @@ import ProductListBulkEdition from "./components/ProductListBulkEdition";
 import ProductDetail from "./components/ProductDetail";
 import EditProduct from "./components/EditProduct";
 import EditProductBulkEdition from "./components/EditProductBulkEdition";
+import Navbar from "./components/NavBar";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const updateProductHandler = async (product) => {
     const response = await api.put(`/api/product/${product.id}`, product);
@@ -35,24 +37,36 @@ function App() {
   };
 
   const retrieveProducts = async () => {
+    
     const response = await api.get("/api/product/");
     return response.data.data;
   };
   useEffect(() => {
     const getAllProducts = async () => {
-      const allProducts = await retrieveProducts();
-      if (allProducts) {
-        const newAllProducts = allProducts.map((item) => {
-          return {
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            inventory_level: item.inventory_level,
-          };
-        });
-
-        setProducts(newAllProducts);
+      setLoading(true);
+      try {
+        const allProducts = await retrieveProducts();
+        if (allProducts) {
+          const newAllProducts = allProducts.map((item) => {
+            return {
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              inventory_level: item.inventory_level,
+            };
+          });
+  
+          setProducts(newAllProducts);
+        }else
+      
+        {   setProducts([]);}
+     
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
       }
+
     };
 
     getAllProducts();
@@ -61,13 +75,14 @@ function App() {
   return (
     <div className="ui container">
       <Router>
+      <Navbar />
         <Routes>
-          <Route exact path="/" element={<ProductList products={products} />} />
+          <Route exact path="/" element={<ProductList products={products} loading={loading}/>} />
           <Route
             exact
             path="/bulk"
             element={
-              <ProductListBulkEdition products={products} />
+              <ProductListBulkEdition products={products} loading={loading}/>
             }
           />
           <Route

@@ -1,10 +1,18 @@
-import React, {  useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import Loading from "./Loading";
+import { useNavigate } from "react-router-dom";
 
 const ProductListBulkEdition = (props) => {
-  const [checkedState, setCheckedState] = useState(new Array(20).fill(false));
+  const navigate = useNavigate();
+  const [checkedState, setCheckedState] = useState(new Array(100).fill(false));
+  const [productToEdit, setProductToEdit] = useState([]);
 
-  const [productToEdit, setProductToEdit] = useState({});
+  const handleOnClick = () => {
+    productToEdit.length <= 10 && productToEdit.length > 0
+      ? navigate("/editbulk", { state: { products: productToEdit } })
+      : window.alert(`
+    it is not possible to edit ${productToEdit.length} values.\n Plese select values ​​between 1 and 10 `);
+  };
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -22,13 +30,17 @@ const ProductListBulkEdition = (props) => {
     setProductToEdit(newTable);
   };
 
-  return (
+  return props.loading ? (
+    <div>
+      <Loading />
+    </div>
+  ) : (
     <div className="main">
-      <h2>Product List</h2>
+      <h2>Bulk Edit</h2>
       <div className="ui celled list">
-        <Link to="/editbulk" state={{ products: productToEdit }}>
-          <button className="ui button blue">Edit</button>
-        </Link>
+        <button className="ui button blue" onClick={handleOnClick}>
+          Edit
+        </button>
         <div className="item">
           <div className="content">
             <table>
@@ -53,7 +65,6 @@ const ProductListBulkEdition = (props) => {
                       <td>{product.price}</td>
                       <td>{product.inventory_level}</td>
                       <td>
-                        {" "}
                         <input
                           type="checkbox"
                           checked={checkedState[key]}
