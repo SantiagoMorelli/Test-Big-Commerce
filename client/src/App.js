@@ -8,7 +8,7 @@ import ProductListBulkEdition from "./components/ProductListBulkEdition";
 import ProductDetail from "./components/ProductDetail";
 import EditProduct from "./components/EditProduct";
 import EditProductBulkEdition from "./components/EditProductBulkEdition";
-import Error from "./components/Error"
+import Error from "./components/Error";
 import Navbar from "./components/NavBar";
 
 function App() {
@@ -38,7 +38,6 @@ function App() {
   };
 
   const retrieveProducts = async () => {
-    
     const response = await api.get("/api/product/");
     return response.data.data;
   };
@@ -56,18 +55,17 @@ function App() {
               inventory_level: item.inventory_level,
             };
           });
-  
+
           setProducts(newAllProducts);
-        }else
-      
-        {   setProducts([]);}
-     
+        } else {
+          setProducts([]);
+        }
+
         setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
       }
-
     };
 
     getAllProducts();
@@ -76,14 +74,18 @@ function App() {
   return (
     <div className="ui container">
       <Router>
-      <Navbar />
+        <Navbar />
         <Routes>
-          <Route exact path="/" element={<ProductList products={products} loading={loading}/>} />
+          <Route
+            exact
+            path="/"
+            element={<ProductList products={products} loading={loading} />}
+          />
           <Route
             exact
             path="/bulk"
             element={
-              <ProductListBulkEdition products={products} loading={loading}/>
+              <ProductListBulkEdition products={products} loading={loading} />
             }
           />
           <Route
@@ -102,7 +104,7 @@ function App() {
           />
 
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path='*' element={<Error />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </Router>
     </div>
