@@ -6,13 +6,9 @@ const EditProductBulkEdition = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { products } = location.state;
-
   const [InputFields, setInputFields] = useState(products);
-
-
   const update = () => {
-    props.updateBulkProductHandler(InputFields );
-
+    props.updateBulkProductHandler(InputFields);
     navigate("/bulk");
   };
   const handleChangeInput = (key, e) => {
@@ -20,7 +16,6 @@ const EditProductBulkEdition = (props) => {
     values[key][e.target.name] = e.target.value;
     setInputFields(values);
   };
-
   return (
     <div className="main">
       <h2>Bulk Edit</h2>
@@ -29,63 +24,58 @@ const EditProductBulkEdition = (props) => {
           Save
         </button>
         <div className="item">
-    
-            <table>
-              <thead>
-                <tr>
-                  <th>id</th>
-
-                  <th>name</th>
-
-                  <th>price</th>
-
-                  <th>inventory_level</th>
-                </tr>
-              </thead>
-              <tbody>
-                {InputFields.map((product, key) => {
-                  return (
-                    <tr key={key}>
-                      <td>{product.id}</td>
-                      <td>
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Name"
-                          value={product.name}
-                          onChange={(e) => handleChangeInput(key, e)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="number"
-                          min={0}
-                          step="any"
-                          name="price"
-                          placeholder="Price"
-                          value={product.price}
-                          onChange={(e) => handleChangeInput(key, e)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="number"
-                          min={0}
-                          name="inventory_level"
-                          placeholder="inventory_level"
-                          value={product.inventory_level}
-                          onChange={(e) => handleChangeInput(key, e)}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>price</th>
+                <th>inventory_level</th>
+              </tr>
+            </thead>
+            <tbody>
+              {InputFields.map((product, key) => {
+                return (
+                  <tr key={key}>
+                    <td>{product.id}</td>
+                    <td>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={product.name}
+                        onChange={(e) => handleChangeInput(key, e)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        min={0}
+                        step="any"
+                        name="price"
+                        placeholder="Price"
+                        value={product.price}
+                        onChange={(e) => handleChangeInput(key, e)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        min={0}
+                        name="inventory_level"
+                        placeholder="inventory_level"
+                        value={product.inventory_level}
+                        onChange={(e) => handleChangeInput(key, e)}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
-  
+    </div>
   );
 };
 

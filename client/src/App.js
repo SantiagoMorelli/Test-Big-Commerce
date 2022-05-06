@@ -8,6 +8,7 @@ import ProductListBulkEdition from "./components/ProductListBulkEdition";
 import ProductDetail from "./components/ProductDetail";
 import EditProduct from "./components/EditProduct";
 import EditProductBulkEdition from "./components/EditProductBulkEdition";
+import Error from "./components/Error"
 import Navbar from "./components/NavBar";
 
 function App() {
@@ -101,6 +102,7 @@ function App() {
           />
 
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path='*' element={<Error />} />
         </Routes>
       </Router>
     </div>

@@ -56,7 +56,6 @@ const EditProduct = (props) => {
             value={inventory_level}
             onChange={(e) => setInventory_level(e.target.value)}
           />
-       
         </div>
         <button className="ui button blue">Update</button>
       </form>
