@@ -21,9 +21,17 @@ function App() {
       })
     );
   };
-  const updateBulkProductHandler = async (products) => {
-    const response = await api.put(`/api/product/`, products);
-    setProducts(products);
+
+  const updateBulkProductHandler = async (newProducts) => {
+    const response = await api.put(`/api/product/`, newProducts);
+
+    setProducts(
+      products.map((item) => {
+        return response.data.data.find((newitem) => newitem.id === item.id)
+          ? response.data.data.find((newitem) => newitem.id === item.id)
+          : item;
+      })
+    );
   };
 
   const retrieveProducts = async () => {
@@ -58,7 +66,9 @@ function App() {
           <Route
             exact
             path="/bulk"
-            element={<ProductListBulkEdition products={products.slice(0,10)} />}
+            element={
+              <ProductListBulkEdition products={products} />
+            }
           />
           <Route
             path="/edit"

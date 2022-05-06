@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 const ProductDetail = (props) => {
   const location = useLocation();
   const { product } = location.state;
-  console.log(props);
   const { name, price, inventory_level } = product;
 
   return (
